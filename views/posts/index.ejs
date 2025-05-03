@@ -1,0 +1,22 @@
+<% layout("./boilerplate/boilerplate") -%>
+    <div class="posts">
+        <% for( let post of posts ) { %>
+            <a href="/posts/<%= post._id %>" class="text-decoration-none">
+                <div class="post devConnect-post" data-created-at="<%= post.createdAt %>">
+                    <h1 class="text-white">
+                        <%= post.title %>
+                    </h1>
+                    <p class="text-secondary">
+                        <%= post.content %>
+                    </p>
+                    <p>
+                    <pre><code class="card border-dark" style="background-color: black !important; border-radius: 1rem;"><%= post.code %></code></pre>
+                    </p>
+                    <p class="text-danger"><i class="fa-regular fa-heart" style="color: red;"></i>
+                        <%= post.likes %>
+                    </p>
+                    <p class="time text-secondary">Posted: Calculating...</p>
+                </div>
+            </a>
+            <% } %>
+    </div>

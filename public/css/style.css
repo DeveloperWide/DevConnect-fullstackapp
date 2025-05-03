@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: black;
+}
+
+/* Index Page Post Styling */
+
+.post {
+    border: 2px solid black;
+    width: 100%;
+    padding: 1rem;
+    border-bottom: 1px solid #333;
+}
+
+.post:hover {
+    background-color: #33333334;
+}
+
+.fa-brands.fa-deviantart {
+    font-size: 3rem;
+    color: rgb(255, 255, 255);
+    padding-left: 15px;
+    filter: drop-shadow(10px 10px 10px rgb(145, 3, 3));
+}
+
+span.fs-4 {
+    font-weight: 900;
+    font-size: 2rem !important;
+    color: rgb(245, 240, 240);
+    filter: drop-shadow(10px 10px 10px brown);
+}
+
+.d-flex.flex-column.flex-shrink-0.p-3.text-white.bg-dark {
+    background-color: black !important;
+    width: 350px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+li .link-dark-rounded {
+    color: whitesmoke !important;
+}
+
+#account-collapse ul li a {
+    color: whitesmoke !important;
+    text-decoration: none;
+
+    color: brown;
+
+}
+
+#account-collapse ul li {
+    list-style-type: none;
+}
+
+button.btn.btn-toggle.align-items-center.rounded.text-white {
+    color: whitesmoke;
+    margin: 1rem;
+    font-size: 2rem;
+    border-radius: 1rem !important;
+    /* border: 2px solid rgb(169, 169, 224); */
+    box-shadow: 3px 3px 10px rgb(169, 169, 224);
+}
+
+li a.nav-link {
+    color: white;
+    font-size: 1.3rem;
+    padding: 0.9rem;
+}
+
+li a.nav-link i {
+    padding-right: 0.4rem;
+}
+
+li a.nav-link:hover {
+    color: #ffffffa8;
+    opacity: 0.7;
+}
+
+li a.nav-link:focus {
+    color: rgb(255, 0, 242);
+}
+
+/* a[href="/posts/new"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+} */
+
+/* Sidebar Button Post Styling */
+
+li a button.post {
+    width: 85%;
+    border-radius: 2.5rem;
+    font-weight: 500;
+    font-size: 1.3rem;
+    margin: 10px;
+}
+
+li a button.post:hover {
+    color: black;
+    background-color: white;
+}

@@ -1,0 +1,25 @@
+<% layout("./boilerplate/boilerplate") -%>
+
+    <div class="post devConnect-post" data-created-at="<%= post.createdAt %>">
+        <h1 class="text-white">
+            <%= post.title %>
+        </h1>
+        <p class="text-secondary">
+            <%= post.content %>
+        </p>
+        <p>
+        <pre><code class="card border-dark" style="background-color: black !important; border-radius: 1rem;"><%= post.code %></code></pre>
+        </p>
+        <p class="text-danger"><i class="fa-regular fa-heart" style="color: red;"></i>
+            <%= post.likes %>
+        </p>
+        <p class="time text-secondary">Posted: Calculating...</p>
+        <div class="btns d-flex">
+            <a href="/posts/<%= post._id %>/edit">
+                <button class="btn btn-outline-success me-3">Edit Post</button>
+            </a>
+            <form action="/posts/<%= post._id %>?_method=DELETE" method="post">
+                <button class="btn btn-danger">Delete Post</button>
+            </form>
+        </div>
+    </div>
