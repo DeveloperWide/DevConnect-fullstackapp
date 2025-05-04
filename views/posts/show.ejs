@@ -1,34 +1,60 @@
 <% layout("./boilerplate/boilerplate") -%>
 
     <div class="post-container">
-        <div class="post devConnect-post" data-created-at="<%= post.createdAt %>">
-            <h1 class="text-white">
-                <%= post.title %>
-            </h1>
-            <p class="text-secondary">
-                <%= post.content %>
-            </p>
-            <p>
-            <pre><code class="card border-dark" style="background-color: black !important; border-radius: 1rem;"><%= post.code %></code></pre>
-            </p>
-            <p class="text-danger"><i class="fa-regular fa-heart" style="color: red;"></i>
-                <%= post.likes %>
-            </p>
-            <p class="time text-secondary">Posted: Calculating...</p>
-            <div class="btns d-flex">
-                <a href="/posts/<%= post._id %>/edit">
-                    <button class="btn btn-outline-success me-3">Edit Post</button>
-                </a>
-                <form action="/posts/<%= post._id %>?_method=DELETE" method="post">
-                    <button class="btn btn-danger">Delete Post</button>
-                </form>
+        <div class="post devConnect-post d-flex" data-created-at="<%= post.createdAt %>" style="gap: 1rem;">
+            <div class="d-flex w-20">
+                <img src="<%= post.owner.image.url %>" alt="<%= post.owner.name %>" height="50" width="50"
+                    style="object-fit: cover;" class="rounded-pill">
             </div>
+            <div class="d-flex flex-column w-80">
+                <div class="d-flex text-white">
+                    <p class="name">
+                        <b>
+                            <%= post.owner.name %>
+                        </b>
+                    </p>
+                    &nbsp;
+                    &nbsp;
+                    <p class="username text-secondary">
+                        @<%= post.owner.username %>
+                    </p>
+                    &nbsp;
+                    &nbsp;
+                    <p class="time text-secondary">Posted: Calculating...</p>
+                </div>
+                <h1 class="text-white">
+                    <%= post.title %>
+                </h1>
+                <p class="text-secondary">
+                    <%= post.content %>
+                </p>
+                <p>
+                <pre><code class="card border-dark" style="background-color: black !important; border-radius: 1rem;"><%= post.code %></code></pre>
+                </p>
+                <p class="text-danger"><i class="fa-regular fa-heart" style="color: red;"></i>
+                    <%= post.likes %>
+                </p>
+            </div>
+            <% if (String(currUser)===String(post.owner._id)) { %>
+                <div class="btns d-flex">
+                    <a href="/posts/<%= post._id %>/edit">
+                        <button class="btn btn-outline-success me-3">Edit Post</button>
+                    </a>
+                    <form action="/posts/<%= post._id %>?_method=DELETE" method="post">
+                        <button class="btn btn-danger">Delete Post</button>
+                    </form>
+                </div>
+                <%} %>
         </div>
         <div class="comment-section">
             <div class="comment-form" style="background-color: black;">
-
+                <div class="d-flex justify-content-center align-items-center">
+                    <p class="text-white">
+                        <%= %>
+                    </p>
+                </div>
                 <form action="/posts/<%= post._id %>/comment" method="post"
-                    class="needs-validation m-4 d-flex align-items-end justify-content-between"
+                    class="needs-validation m-4 d-flex align-items-end justify-content-between w-80"
                     enctype="application/x-www-form-urlencoded" novalidate>
                     <div class="mb-3 p-8">
                         <input type="text" class="bg-transparent border-none outline-none text-white fs-3 h-40"

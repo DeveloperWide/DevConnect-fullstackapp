@@ -128,3 +128,33 @@ input[name="comment[comment]"]:focus {
     border: none !important;
     box-shadow: none !important;
 }
+
+/* Dropdown */
+
+
+.dropdown-menu .dropdown-item:focus {
+    background-color: none !important;
+    box-shadow: 10px 10px 10px rgba(0, 255, 255, 0.082);
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: burlywood !important;
+    border-radius: 1rem;
+    box-shadow: 10px 10px 10px rgba(0, 255, 255, 0.082);
+}
+
+.dropdown,
+.dropend,
+.dropstart,
+.dropup {
+    bottom: -280px;
+}
+
+.user {
+    position: relative;
+    bottom: -250px;
+}
+
+.user a {
+    margin-bottom: 5px;
+}

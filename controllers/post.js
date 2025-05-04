@@ -3,7 +3,7 @@ const { asyncWrapper } = require("../utility/asyncWrapper")
 const ExpressError = require("../utility/ExpressError");
 
 module.exports.index = async (req, res) => {
-    let posts = await Post.find();
+    let posts = await Post.find().populate("owner");;
     res.render("posts/index", { title: "All Posts", posts })
 }
 
@@ -16,7 +16,7 @@ module.exports.createPost = asyncWrapper(async (req, res) => {
 
     likes = parseInt(likes) || 0;
 
-    let newPost = new Post({ title, content, code, likes });
+    let newPost = new Post({ title, content, code, likes, owner: req.session.user });
 
     let postRes = await newPost.save();
     if (postRes) {
@@ -30,7 +30,7 @@ module.exports.createPost = asyncWrapper(async (req, res) => {
 
 module.exports.showPost = asyncWrapper(async (req, res, next) => {
     let { id } = req.params;
-    const post = await Post.findById(id).populate("comments");
+    const post = await Post.findById(id).populate("comments").populate("owner");
     if (!post) {
         req.flash("error", "The post you are trying to access doesn't exist");
         return res.redirect("/posts")

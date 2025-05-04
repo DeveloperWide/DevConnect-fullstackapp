@@ -31,6 +31,7 @@ app.use(session(sessionOption))
 app.use(flash());
 
 app.use((req, res, next) => {
+    res.locals.currUser = req.session.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
@@ -55,6 +56,7 @@ main().then(() => {
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/devConnect');
 }
+
 
 app.get("/", (req, res) => {
     res.redirect("/posts")

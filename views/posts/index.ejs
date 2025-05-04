@@ -2,20 +2,40 @@
     <div class="posts">
         <% for( let post of posts ) { %>
             <a href="/posts/<%= post._id %>" class="text-decoration-none">
-                <div class="post devConnect-post" data-created-at="<%= post.createdAt %>">
-                    <h1 class="text-white">
-                        <%= post.title %>
-                    </h1>
-                    <p class="text-secondary">
-                        <%= post.content %>
-                    </p>
-                    <p>
-                    <pre><code class="card border-dark" style="background-color: black !important; border-radius: 1rem;"><%= post.code %></code></pre>
-                    </p>
-                    <p class="text-danger"><i class="fa-regular fa-heart" style="color: red;"></i>
-                        <%= post.likes %>
-                    </p>
-                    <p class="time text-secondary">Posted: Calculating...</p>
+                <div class="post devConnect-post d-flex" data-created-at="<%= post.createdAt %>" style="gap: 1rem;">
+                    <div class="d-flex w-20">
+                        <img src="<%= post.owner.image.url %>" alt="<%= post.owner.name %>" height="50" width="50"
+                            style="object-fit: cover;" class="rounded-pill">
+                    </div>
+                    <div class="d-flex flex-column w-80">
+                        <div class="d-flex text-white">
+                            <p class="name">
+                                <b>
+                                    <%= post.owner.name %>
+                                </b>
+                            </p>
+                            &nbsp;
+                            &nbsp;
+                            <p class="username text-secondary">
+                                @<%= post.owner.username %>
+                            </p>
+                            &nbsp;
+                            &nbsp;
+                            <p class="time text-secondary">Posted: Calculating...</p>
+                        </div>
+                        <h1 class="text-white">
+                            <%= post.title %>
+                        </h1>
+                        <p class="text-secondary">
+                            <%= post.content %>
+                        </p>
+                        <p>
+                        <pre><code class="card border-dark" style="background-color: black !important; border-radius: 1.4rem;"><%= post.code %></code></pre>
+                        </p>
+                        <p class="text-danger"><i class="fa-regular fa-heart" style="color: red;"></i>
+                            <%= post.likes %>
+                        </p>
+                    </div>
                 </div>
             </a>
             <% } %>

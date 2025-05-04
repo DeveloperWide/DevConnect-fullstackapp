@@ -1,5 +1,6 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; border-left: 1px solid #333;">
-    <div class="container">
+<div class="d-flex flex-column flex-shrink-0 p-3 text-white align-items-center align-content-between bg-dark"
+    style="width: 280px; border-left: 1px solid #333;">
+    <div class="position-absolute top-0" style="height: 200px;">
         <form class="d-flex pt-2">
             <div class="position-relative w-100">
                 <i
@@ -18,4 +19,18 @@
             </div>
         </div>
     </div>
+    <!-- Default dropup button -->
+    <div class="user m-5 w-100">
+        <% if( !currUser) {%>
+            <a class="btn btn-outline-success  text-white w-100" href="/register">Signup</a>
+            <a class="btn btn-outline-success  text-white w-100" href="/login">Login</a>
+            <% } %>
+                <% if(currUser) {%>
+                    <form action="/logout" method="post">
+                        <button type="submit" class="btn btn-outline-danger  text-white w-100"
+                            style="margin-top: 50px;">LogOut</button>
+                    </form>
+                    <% } %>
+    </div>
+
 </div>

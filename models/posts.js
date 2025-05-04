@@ -23,9 +23,13 @@ const postSchema = new Schema({
     comments: [
         {
             type: Schema.Types.ObjectId,
-            ref: "Comment"
+            ref: "Comment",
         }
-    ]
+    ],
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    }
 }, { timestamps: true });
 
 const Post = model("Post", postSchema);
