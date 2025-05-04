@@ -13,6 +13,16 @@
     })
 })()
 
+
+setTimeout(() => {
+    const flashDiv = document.getElementById('flash-div');
+    if (flashDiv) {
+        flashDiv.style.transition = "opacity 0.5s ease-out";
+        flashDiv.style.opacity = 0;
+        setTimeout(() => flashDiv.remove(), 500);
+    }
+}, 3000); // 3 seconds auto-dismiss
+
 function getTimeAgo(dateString) {
     const createdAt = new Date(dateString);
     const now = new Date();

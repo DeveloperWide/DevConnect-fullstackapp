@@ -8,3 +8,9 @@ module.exports.postSchema = Joi.object({
         likes: Joi.number().min(0)
     }).required(),
 });
+
+module.exports.commentSchema = Joi.object({
+    comment: Joi.object({
+        comment: Joi.string().required()
+    }).required(),
+});

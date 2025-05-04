@@ -112,3 +112,19 @@ li a button.post:hover {
     color: black;
     background-color: white;
 }
+
+.reply:hover {
+    opacity: 1 !important;
+}
+
+input[name="comment[comment]"] {
+    border: none;
+    outline: none !important;
+    height: 100px;
+}
+
+input[name="comment[comment]"]:focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}

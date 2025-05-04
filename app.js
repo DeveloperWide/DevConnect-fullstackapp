@@ -1,17 +1,21 @@
+if (process.env.NODE_ENV !== "production") {
+    const dotenv = require("dotenv").config();
+}
 const express = require("express");
 const app = express();
 const ejs = require("ejs");
 const PORT = 8080;
 const mongoose = require("mongoose");
 const path = require("path");
-const Post = require("./models/posts");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
-const ExpressError = require("./utility/ExpressError");
-const { postSchema } = require("./schema");
 const session = require('express-session');
 const flash = require("connect-flash");
-const { asyncWrapper } = require("./utility/asyncWrapper");
+
+const postRoutes = require("./routes/post")
+const commentRoutes = require("./routes/comment");
+const ExpressError = require("./utility/ExpressError");
+const userRoutes = require("./routes/user")
 
 const sessionOption = {
     secret: "secretKey",
@@ -29,20 +33,8 @@ app.use(flash());
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
-    console.log(res.locals.successs, res.locals.error)
     next();
 });
-
-
-let validatePost = (req, res, next) => {
-    let { error } = postSchema.validate(req.body);
-    console.log(req._parsedUrl.pathname)
-    if (error) {
-        throw new ExpressError(error.details[0].message, 400)
-    } else {
-        next();
-    }
-}
 
 // use ejs-locals for all ejs templates:
 app.engine('ejs', ejsMate);
@@ -68,94 +60,20 @@ app.get("/", (req, res) => {
     res.redirect("/posts")
 })
 
-//Post Routes
-//Retrive all the posts here...
+//All Routes
 
-app.get("/posts", async (req, res) => {
-    let posts = await Post.find();
-    res.render("posts/index", { title: "All Posts", posts, currentPage: 'posts' })
-})
+app.use("/posts", postRoutes);
+app.use("/posts/:id/comment", commentRoutes);
+app.use("/", userRoutes)
 
-//Render Create Posts Form
-app.get("/posts/new", async (req, res) => {
-    res.render("posts/new", { title: "Create Posts" });
-})
+// Catch-all for unmatched routes
+app.use((req, res, next) => {
+    next(new ExpressError("Page Not Found", 404));
+});
 
-//Create Post
-app.post("/posts", validatePost, asyncWrapper(async (req, res) => {
-    let { title, content, code, likes } = req.body.post;
-
-    likes = parseInt(likes) || 0;
-
-    let newPost = new Post({ title, content, code, likes });
-
-    let postRes = await newPost.save();
-    if (postRes) {
-        req.flash("success", "Successfully Created New Post")
-    } else {
-        req.flash("error", "Error While Creating Post");
-        return res.redirect("/posts")
-    }
-    res.redirect("/posts");
-}))
-
-// Show Post
-app.get("/posts/:id", asyncWrapper(async (req, res, next) => {
-    let { id } = req.params;
-    const post = await Post.findById(id);
-    if (!post) {
-        req.flash("error", "The post you are trying to access doesn't exist")
-    }
-    res.render("posts/show", { title: post.title, post })
-})
-)
-//Render Edit Form
-app.get("/posts/:id/edit", asyncWrapper(async (req, res) => {
-    let { id } = req.params;
-    let post = await Post.findById(id);
-    if (!post) {
-        throw new ExpressError("Post Not Found", 400);
-    }
-    res.render("posts/edit", { title: post.title, post })
-}))
-
-// Update Post
-app.put("/posts/:id", validatePost, asyncWrapper(async (req, res) => {
-    let { id } = req.params;
-    let { post } = req.body;
-
-    if (!post) {
-        throw new ExpressError("No Post Data Sent", 400);
-    }
-
-    let updatedPost = await Post.findByIdAndUpdate(id, {
-        $set: {
-            title: post.title,
-            content: post.content,
-            code: post.code,
-            likes: post.likes
-        }
-    }, { new: true, });
-
-    if (!updatedPost) {
-        throw new ExpressError("Post Not Found", 404);
-    }
-
-    res.redirect(`/posts/${id}`);
-}));
-
-app.delete("/posts/:id", asyncWrapper(async (req, res) => {
-    await Post.findByIdAndDelete(req.params.id);
-    res.redirect("/posts");
-}));
-
-// // Catch-all for unmatched routes
-// app.all("*", (req, res, next) => {
-//     next(new ExpressError("Page Not Found", 404));
-// });
-
-
+//Error Handling Middleware
 app.use((err, req, res, next) => {
+    console.log(err)
     const statusCode = err.statusCode || 500;
     const message = err.message || "Some Error Occurred";
     res.status(statusCode).render("error.ejs", { message });

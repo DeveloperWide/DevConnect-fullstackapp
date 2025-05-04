@@ -1,25 +1,60 @@
 <% layout("./boilerplate/boilerplate") -%>
 
-    <div class="post devConnect-post" data-created-at="<%= post.createdAt %>">
-        <h1 class="text-white">
-            <%= post.title %>
-        </h1>
-        <p class="text-secondary">
-            <%= post.content %>
-        </p>
-        <p>
-        <pre><code class="card border-dark" style="background-color: black !important; border-radius: 1rem;"><%= post.code %></code></pre>
-        </p>
-        <p class="text-danger"><i class="fa-regular fa-heart" style="color: red;"></i>
-            <%= post.likes %>
-        </p>
-        <p class="time text-secondary">Posted: Calculating...</p>
-        <div class="btns d-flex">
-            <a href="/posts/<%= post._id %>/edit">
-                <button class="btn btn-outline-success me-3">Edit Post</button>
-            </a>
-            <form action="/posts/<%= post._id %>?_method=DELETE" method="post">
-                <button class="btn btn-danger">Delete Post</button>
-            </form>
+    <div class="post-container">
+        <div class="post devConnect-post" data-created-at="<%= post.createdAt %>">
+            <h1 class="text-white">
+                <%= post.title %>
+            </h1>
+            <p class="text-secondary">
+                <%= post.content %>
+            </p>
+            <p>
+            <pre><code class="card border-dark" style="background-color: black !important; border-radius: 1rem;"><%= post.code %></code></pre>
+            </p>
+            <p class="text-danger"><i class="fa-regular fa-heart" style="color: red;"></i>
+                <%= post.likes %>
+            </p>
+            <p class="time text-secondary">Posted: Calculating...</p>
+            <div class="btns d-flex">
+                <a href="/posts/<%= post._id %>/edit">
+                    <button class="btn btn-outline-success me-3">Edit Post</button>
+                </a>
+                <form action="/posts/<%= post._id %>?_method=DELETE" method="post">
+                    <button class="btn btn-danger">Delete Post</button>
+                </form>
+            </div>
+        </div>
+        <div class="comment-section">
+            <div class="comment-form" style="background-color: black;">
+
+                <form action="/posts/<%= post._id %>/comment" method="post"
+                    class="needs-validation m-4 d-flex align-items-end justify-content-between"
+                    enctype="application/x-www-form-urlencoded" novalidate>
+                    <div class="mb-3 p-8">
+                        <input type="text" class="bg-transparent border-none outline-none text-white fs-3 h-40"
+                            name="comment[comment]" id="commentContent" placeholder="Post Your Reply" autocomplete="off"
+                            required />
+                        <div class="invalid-feedback">Please enter a Comment Here.</div>
+                    </div>
+                    <input type="submit" class=" reply btn text-black fs-5 rounded-pill bg-white"
+                        style="height: 50px; width: 110px; font-weight: bold; opacity: 0.7;" value="Reply">
+                </form>
+            </div>
+            <% for (let comment of post.comments) { %>
+                <div class="card bg-transparent d-flex justify-content-between align-items-start"
+                    style="border-top: 1px solid #333; min-height: 100px; position: relative;">
+
+                    <!-- Comment Text -->
+                    <p class="title p-4 m-0" style="font-size: 1.3rem !important; color: white; flex: 1;">
+                        <%= comment.comment %>
+                    </p>
+
+                    <!-- Delete Button -->
+                    <form action="/posts/<%= post._id %>/comment/<%= comment._id %>?_method=DELETE" method="post"
+                        style="position: absolute; bottom: 10px; right: 10px;">
+                        <button type="submit" value="Delete" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+                <% } %>
         </div>
     </div>
