@@ -30,7 +30,11 @@ module.exports.createPost = asyncWrapper(async (req, res) => {
 
 module.exports.showPost = asyncWrapper(async (req, res, next) => {
     let { id } = req.params;
-    const post = await Post.findById(id).populate("comments").populate("owner");
+    const post = await Post.findById(id).populate({
+        path: "comments", populate: {
+            path: "author"
+        }
+    }).populate("owner");
     if (!post) {
         req.flash("error", "The post you are trying to access doesn't exist");
         return res.redirect("/posts")

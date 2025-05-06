@@ -5,14 +5,9 @@ const express = require("express");
 const router = express.Router();
 const controllers = require("../controllers/user")
 
-router.get("/register", controllers.renderSignUpForm)
+router.route("/register").get(controllers.renderSignUpForm).post(upload.single("user[image]"), controllers.signUpUser);
 
-router.post("/register", upload.single("user[image]"), controllers.signUpUser);
-
-router.get("/login", controllers.renderLoginForm)
-
-router.post("/login", controllers.loginUser);
-
+router.route("/login").get(controllers.renderLoginForm).post(controllers.loginUser);
 
 router.post("/logout", controllers.logoutUser)
 

@@ -3,23 +3,12 @@ const router = express.Router();
 const { validatePost, isLoggedIn, isOwner } = require("../middlewares");
 const controllers = require("../controllers/post");
 
-router.get("/", controllers.index)
+router.route("/").get(isLoggedIn, controllers.index).post(isLoggedIn, validatePost, controllers.createPost)
 
-//Render Create Posts Form
 router.get("/new", isLoggedIn, controllers.renderNewPostForm)
 
-//Create Post
-router.post("/", isLoggedIn, validatePost, controllers.createPost)
+router.route("/:id").get(isLoggedIn, controllers.showPost).put(isLoggedIn, isOwner, validatePost, controllers.updatePost).delete(isLoggedIn, isOwner, controllers.destroyPost);
 
-// Show Post
-router.get("/:id", controllers.showPost);
-
-//Render Edit Form
-router.get("/:id/edit", isOwner, isLoggedIn, controllers.renderEditForm)
-
-// Update Post
-router.put("/:id", isOwner, isLoggedIn, validatePost, controllers.updatePost);
-
-router.delete("/:id", isOwner, isLoggedIn, controllers.destroyPost);
+router.get("/:id/edit", isLoggedIn, isOwner, controllers.renderEditForm)
 
 module.exports = router;

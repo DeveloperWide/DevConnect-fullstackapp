@@ -41,3 +41,40 @@ document.querySelectorAll(".devConnect-post").forEach(postEl => {
     const timeText = getTimeAgo(postEl.dataset.createdAt);
     postEl.querySelector(".time").innerText = timeText;
 });
+
+const moreBtn = document.getElementById('moreBtn');
+const menuCard = document.getElementById('menuCard');
+
+if (moreBtn || menuCard) {
+    // Toggle the card when icon is clicked
+    moreBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Stop event from bubbling to document
+        menuCard.classList.toggle('show');
+    });
+
+    // Close the card if clicked outside
+    document.addEventListener('click', (e) => {
+        if (!menuCard.contains(e.target) && e.target !== moreBtn) {
+            menuCard.classList.remove('show');
+        }
+    });
+}
+
+let followingBtn = document.querySelector(".following");
+
+if (followingBtn.innerText.trim() === ("Following")) {
+    followingBtn.style.backgroundColor = "transparent";
+    followingBtn.style.fontWeight = "800";
+
+    followingBtn.addEventListener("mouseover", () => {
+        followingBtn.style.border = "1px solid red";
+        followingBtn.style.color = "red";
+        followingBtn.innerText = "Unfollow";
+    });
+
+    followingBtn.addEventListener("mouseout", () => {
+        followingBtn.style.border = "1px solid white";
+        followingBtn.style.color = "white"; // or your default color
+        followingBtn.innerText = "Following"
+    });
+}

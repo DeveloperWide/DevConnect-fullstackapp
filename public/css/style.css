@@ -158,3 +158,76 @@ input[name="comment[comment]"]:focus {
 .user a {
     margin-bottom: 5px;
 }
+
+/* User Posts Menu Icon */
+
+.post-option-icon {
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    padding: 0.6rem;
+    font-size: 1.3rem !important;
+    color: #6c757d;
+}
+
+.post-option-icon:hover {
+    border-radius: 100%;
+    background-color: rgba(0, 255, 255, 0.103);
+    color: rgba(0, 255, 255, 0.781);
+}
+
+.menu {
+    position: relative;
+    display: inline-block;
+}
+
+.menu-content {
+    display: none;
+    position: absolute;
+    width: 200px;
+    right: 0;
+    background-color: black;
+    border: 1px solid #333;
+    border-radius: 1rem;
+    box-shadow: 4px 4px 10px #333;
+    z-index: 1;
+}
+
+.menu-content.show {
+    display: block;
+}
+
+.menu-option {
+    padding: 8px;
+    width: 100%;
+    margin: none !important;
+    cursor: pointer;
+    background-color: transparent;
+    color: white;
+    text-align: start;
+    padding: 1rem;
+    border: none;
+}
+
+.show-post-card-btns a:hover {
+    background-color: #1d1b1b77 !important;
+}
+
+.show-post-card-btns form:hover {
+    background-color: #1d1b1b77 !important;
+}
+
+.container,
+.container-fluid,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+.following-btn:hover{
+    border-color: red;
+}

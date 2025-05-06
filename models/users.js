@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 const bcrypt = require("bcrypt");
-const { types } = require("joi");
+const { types, ref } = require("joi");
 
 const userSchema = new Schema({
     name: {
@@ -28,7 +28,15 @@ const userSchema = new Schema({
     image: {
         filename: String,
         url: String
-    }
+    },
+    followers: [{
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }],
+    following: [{
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }]
 }, { timestamps: true });
 
 // Pre-save hook to hash password before saving

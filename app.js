@@ -16,6 +16,7 @@ const postRoutes = require("./routes/post")
 const commentRoutes = require("./routes/comment");
 const ExpressError = require("./utility/ExpressError");
 const userRoutes = require("./routes/user")
+const profileRoutes = require("./routes/profile")
 
 const sessionOption = {
     secret: "secretKey",
@@ -67,6 +68,7 @@ app.get("/", (req, res) => {
 app.use("/posts", postRoutes);
 app.use("/posts/:id/comment", commentRoutes);
 app.use("/", userRoutes)
+app.use("/", profileRoutes)
 
 // Catch-all for unmatched routes
 app.use((req, res, next) => {

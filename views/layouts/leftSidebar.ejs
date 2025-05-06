@@ -31,29 +31,31 @@
                     Messages
                 </a>
             </li>
-            <li>
-                <a href="#" class="nav-link">
-                    <i class="fa-solid fa-user"></i>
-                    Profile
-                </a>
-            </li>
-            <li>
-                <a href="" class="nav-link">
-                    <i class="fa-solid fa-user-group"></i>
-                    Communities
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link">
-                    <i class="fa-solid fa-ellipsis"></i>
-                    More
-                </a>
-            </li>
-            <li>
-                <a href="/posts/new" class="me-4">
-                    <button class="post">Post</button>
-                </a>
-            </li>
+            <% if(currUser) {%>
+                <li>
+                    <a href="/profile/<%= currUser.username %>" class="nav-link">
+                        <i class="fa-solid fa-user"></i>
+                        Profile
+                    </a>
+                </li>
+                <% } %>
+                    <li>
+                        <a href="" class="nav-link">
+                            <i class="fa-solid fa-user-group"></i>
+                            Communities
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">
+                            <i class="fa-solid fa-ellipsis"></i>
+                            More
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/posts/new" class="me-4">
+                            <button class="post">Post</button>
+                        </a>
+                    </li>
         </ul>
     </div>
 </div>

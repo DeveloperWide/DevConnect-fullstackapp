@@ -12,7 +12,7 @@ module.exports.signUpUser = async (req, res) => {
     }
     let newUser = new User({ ...user });  // password will be auto-hashed
     let savedUser = await newUser.save();
-    req.session.user = savedUser._id;
+    req.session.user = savedUser;
     req.flash("success", "Welcome to DevConnect!");
     res.redirect("/posts");
 }
@@ -33,9 +33,10 @@ module.exports.loginUser = async (req, res) => {
     let isValid = await user.validatePassword(password);
 
     if (isValid) {
-        req.session.user = user._id;
+        req.session.user = user;
         req.flash("success", `Welcome back, ${username}!`);
-        res.redirect("/posts");
+        let path = req.session.redirectUrl || '/posts';
+        res.redirect(`${path}`);
     } else {
         req.flash("error", "Invalid username or password.");
         res.redirect("/login");
