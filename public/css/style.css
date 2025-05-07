@@ -194,11 +194,10 @@ input[name="comment[comment]"]:focus {
 }
 
 .menu-content.show {
-    display: block;
+    display: block !important;
 }
 
 .menu-option {
-    padding: 8px;
     width: 100%;
     margin: none !important;
     cursor: pointer;
@@ -209,11 +208,7 @@ input[name="comment[comment]"]:focus {
     border: none;
 }
 
-.show-post-card-btns a:hover {
-    background-color: #1d1b1b77 !important;
-}
-
-.show-post-card-btns form:hover {
+.menu-option:hover{
     background-color: #1d1b1b77 !important;
 }
 
@@ -230,4 +225,37 @@ input[name="comment[comment]"]:focus {
 
 .following-btn:hover{
     border-color: red;
+}
+
+/* Like Button */
+
+/* .fa-solid.fa-heart{
+    display: none;
+} */
+
+.fa-heart{
+    padding: 0.6rem;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+}
+
+.fa-heart:hover{
+    background-color: rgba(255, 0, 0, 0.205);
+    opacity: 0.8;
+    color: red !important;
+}
+
+.fa-comment{
+    padding: 0.6rem;
+    width: 35px;
+    height: 35px;
+    color: #6c757d;
+    border-radius: 100%;
+}
+
+.fa-comment:hover{
+    background-color: rgba(0, 68, 255, 0.205);
+    opacity: 0.7;
+    color: rgb(0, 4, 255) !important;
 }

@@ -1,5 +1,8 @@
 <% layout("./boilerplate/boilerplate") -%>
+<% if(currUser){ %>
+    <%- include("../layouts/navbar.ejs") %>
 
+   <% } %>
     <div class="container my-5 text-white">
         <h1 class="mb-4">Create New Post</h1>
         <form action="/posts" method="post" class="needs-validation" enctype="application/x-www-form-urlencoded"

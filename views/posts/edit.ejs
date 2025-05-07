@@ -1,13 +1,16 @@
 <% layout("./boilerplate/boilerplate") -%>
+<% if(currUser){ %>
+    <%- include("../layouts/navbar.ejs") %>
 
-    <div class="container my-5 text-white">
-        <h1 class="mb-4">Edit Post</h1>
-        <form action="/posts/<%= post._id %>?_method=PUT" method="post" class="needs-validation" novalidate>
+   <% } %>
+    <div class="container p-3 text-white">
+        <h1 class="m-4">Edit Post</h1>
+        <form action="/posts/<%= post._id %>?_method=PUT" method="post" class="needs-validation m-5" novalidate>
 
             <!-- Title -->
             <div class="mb-3">
                 <label for="postTitle" class="form-label">Title</label>
-                <input type="text" name="post[title]" class="form-control bg-dark text-white" id="postTitle"
+                <input type="text" name="post[title]" class="form-control bg-dark text-white " id="postTitle"
                     placeholder="Enter your title" value="<%= post.title %>" required>
                 <div class="invalid-feedback">Please enter a title.</div>
             </div>
@@ -23,8 +26,8 @@
             <!-- Code -->
             <div class="mb-3">
                 <label for="postCode" class="form-label">Code</label>
-                <textarea name="post[code]" class="form-control bg-dark text-white" id="postCode" rows="5"
-                    placeholder="Enter your code" required><%= post.code %></textarea>
+                <textarea name="post[code]" class="form-control bg-dark text-white" id="postCode" rows="10"
+                    placeholder="Enter your code" required style="overflow-y: scroll; scrollbar-width: none; scroll-behavior: smooth;"><%= post.code %></textarea>
                 <div class="invalid-feedback">Please provide your code snippet.</div>
             </div>
 

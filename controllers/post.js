@@ -87,3 +87,29 @@ module.exports.destroyPost = asyncWrapper(async (req, res) => {
     }
     res.redirect("/posts");
 })
+
+module.exports.likePost = asyncWrapper(async (req, res) => {
+    let { id } = req.params;
+        let userId = res.locals.currUser._id; // Assuming user is logged in
+
+        let post = await Post.findById(id);
+
+        let liked = false;
+
+        let likedIndex = post.likes.indexOf(userId);
+
+        if (likedIndex === -1) {
+            post.likes.push(userId);
+            liked = true;
+        } else {
+            post.likes.splice(likedIndex, 1);
+            liked = false;
+        }
+
+        await post.save();
+
+        res.json({ 
+            likesCount: post.likes.length, 
+            liked: liked 
+        });
+})

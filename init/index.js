@@ -15,7 +15,8 @@ const initDb = async () => {
     await Post.deleteMany();
     const updatedData = data.map(obj => ({
         ...obj,
-        owner: '681792ee744634a8886aae2d'
+        owner: '681792ee744634a8886aae2d',
+        likes: '681792ee744634a8886aae2d'
     }));
     const allPosts = await Post.insertMany(updatedData);
     console.log(`Data intialized`);

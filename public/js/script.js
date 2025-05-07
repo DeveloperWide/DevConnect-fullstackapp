@@ -42,39 +42,98 @@ document.querySelectorAll(".devConnect-post").forEach(postEl => {
     postEl.querySelector(".time").innerText = timeText;
 });
 
-const moreBtn = document.getElementById('moreBtn');
-const menuCard = document.getElementById('menuCard');
+const menus = document.querySelectorAll('.menu');
 
-if (moreBtn || menuCard) {
-    // Toggle the card when icon is clicked
-    moreBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Stop event from bubbling to document
-        menuCard.classList.toggle('show');
-    });
+if (menus) {
+    menus.forEach(menu => {
+        const moreBtn = menu.querySelector('.moreBtn');
+        const menuCard = menu.querySelector('.menuCard');
 
-    // Close the card if clicked outside
-    document.addEventListener('click', (e) => {
-        if (!menuCard.contains(e.target) && e.target !== moreBtn) {
-            menuCard.classList.remove('show');
-        }
+        moreBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            // Close other open menus first
+            document.querySelectorAll('.menuCard.show').forEach(card => {
+                if (card !== menuCard) {
+                    card.classList.remove('show');
+                }
+            });
+
+            // Toggle current menu
+            menuCard.classList.toggle('show');
+        });
+
+        // Close if clicked outside
+        document.addEventListener('click', (e) => {
+            if (!menu.contains(e.target)) {
+                menuCard.classList.remove('show');
+            }
+        });
     });
 }
 
 let followingBtn = document.querySelector(".following");
+if (followingBtn) {
 
-if (followingBtn.innerText.trim() === ("Following")) {
-    followingBtn.style.backgroundColor = "transparent";
-    followingBtn.style.fontWeight = "800";
+    if (followingBtn.innerText.trim() === ("Following")) {
+        followingBtn.style.backgroundColor = "transparent";
+        followingBtn.style.fontWeight = "800";
 
-    followingBtn.addEventListener("mouseover", () => {
-        followingBtn.style.border = "1px solid red";
-        followingBtn.style.color = "red";
-        followingBtn.innerText = "Unfollow";
-    });
+        followingBtn.addEventListener("mouseover", () => {
+            followingBtn.style.border = "1px solid red";
+            followingBtn.style.color = "red";
+            followingBtn.innerText = "Unfollow";
+        });
 
-    followingBtn.addEventListener("mouseout", () => {
-        followingBtn.style.border = "1px solid white";
-        followingBtn.style.color = "white"; // or your default color
-        followingBtn.innerText = "Following"
+        followingBtn.addEventListener("mouseout", () => {
+            followingBtn.style.border = "1px solid white";
+            followingBtn.style.color = "white"; // or your default color
+            followingBtn.innerText = "Following"
+        });
+    }
+
+}
+
+let likeBtn = document.querySelectorAll('.like-btn');
+
+if(likeBtn){
+    console.log(likeBtn)
+    likeBtn.forEach(button => {
+        button.addEventListener('click', async function(e) {
+            e.preventDefault();
+    
+            let id = this.dataset.postId;
+    
+            try {
+                let res = await fetch(`http://localhost:8080/posts/${id}/like`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+    
+                let data = await res.json();
+    
+                // Update like count
+                let countSpan = this.parentElement.querySelector('.like-count');
+                countSpan.textContent = data.likesCount;
+    
+                // Update icon (toggle heart)
+                let icon = this.querySelector('i');
+                if (data.liked) {
+                    icon.classList.remove('fa-regular');
+                    icon.classList.add('fa-solid');
+                    icon.style.color = '#ff0000';
+                } else {
+                    icon.classList.remove('fa-solid');
+                    icon.classList.add('fa-regular');
+                    icon.style.color = 'rgb(94, 87, 87)';
+                }
+    
+            } catch (err) {
+                console.error(err);
+                alert("Something went wrong");
+            }
+        });
     });
 }
