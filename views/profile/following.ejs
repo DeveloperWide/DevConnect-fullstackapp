@@ -1,32 +1,28 @@
 <% layout("./boilerplate/boilerplate") -%>
-    <div class="caontainer">
-        <% for(let following of followings) {%>
-            <div class="card d-flex flex-row text-white" style="background-color: black;">
-                <div class="w-20">
-                    <img src="<%= following.image.url %>" alt="<%= following.name %>" style="width: 50px; height: 50px; border-radius: 100%; object-fit: cover; margin: 1rem;">
-                </div>
-                <div class="d-flex flex-column w-60 p-3">
-                    <p class="p-0 m-0"><b><%= following.name %></b></p>
-                    <p class="p-0 m-0" style="color: #363333;">@<%= following.username %></p>
-                    <p class="p-0 m-0 fs-6"><%= following.bio %></p>
-                </div>
-                <div class="d-flex gap-2 mt-3 w-20 m-1">
-                        <% if (String(currUser._id) !==String(following._id)) { %>
-                            <form action="/profile/<%= following._id %>?_method=PATCH" method="post">
-                                <% // Check if current user is following the profile user let
-                                    isFollowing=following.followers.some(follower=> String(follower) ===
-                                    String(currUser._id));
-
-                                    // Check if profile user is following the current user back
-                                    let isFollower = currUser.followers.some(follower => String(follower) ===
-                                    String(follower._id)); %><button
-                                        class="btn btn-outline-light btn-sm rounded-pill following" id="following">
-                                        <%= isFollowing ? (isFollower ? "Following" : "Following" ) : (isFollower
-                                            ? "Follow Back" : "Follow" ) %>
-                                    </button>
-                            </form>
-                            <% } %>
-                </div>
-            </div>
-            <% } %>
+    <div class="container">
+        <% for(let following of followings) { %>
+            <% let isFollowing=following.followers.some(follower=> String(follower) === String(currUser._id)); %>
+                <% let isFollower=following.following.some(follower=> String(follower) === String(currUser._id));
+                    %>
+                    <div class="card d-flex flex-row text-white" style="background-color: black;">
+                        <div class="w-20">
+                           <a href="/profile/<%= following.username %>">
+                            <img src="<%= following.image.url %>" alt="<%= following.name %>"
+                            style="width: 50px; height: 50px; border-radius: 100%; object-fit: cover; margin: 1rem;">
+                           </a>
+                        </div>
+                        <div class="d-flex flex-column w-60 p-3">
+                            <a href="/profile/<%= following.username %>" class="text-decoration-none" style="color: #363333;">
+                                <p class="p-0 m-0 text-white"><b>
+                                    <%= following.name %>
+                                </b></p>
+                            <p class="p-0 m-0">@<%= following.username %>
+                            </a>
+                            </p>
+                            <p class="p-0 m-0 fs-6">
+                                <%= following.bio %>d
+                            </p>
+                        </div>
+                    </div>
+                    <% } %>
     </div>

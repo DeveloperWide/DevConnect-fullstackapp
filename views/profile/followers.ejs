@@ -1,31 +1,27 @@
 <% layout("./boilerplate/boilerplate") -%>
-    <div class="caontainer">
-        <% for(let follower of followers) {%>
+    <div class="container">
+        <% for(let follower of followers) { let isFollowing=follower.followers.some(f=> String(f) ===
+            String(currUser._id));
+            let isFollower = currUser.followers.some(f => String(f) === String(follower._id));
+            %>
             <div class="card d-flex flex-row text-white" style="background-color: black;">
                 <div class="w-20">
-                    <img src="<%= follower.image.url %>" alt="<%= follower.name %>" style="width: 50px; height: 50px; border-radius: 100%; object-fit: cover; margin: 1rem;">
+                    <a href="/profile/<%= follower.username %>">
+                        <img src="<%= follower.image.url %>" alt="<%= follower.name %>"
+                            style="width: 50px; height: 50px; border-radius: 100%; object-fit: cover; margin: 1rem;">
+                    </a>
                 </div>
                 <div class="d-flex flex-column w-60 p-3">
-                    <p class="p-0 m-0"><b><%= follower.name %></b></p>
-                    <p class="p-0 m-0" style="color: #363333;">@<%= follower.username %></p>
-                    <p class="p-0 m-0 fs-6"><%= follower.bio %></p>
-                </div>
-                <div class="d-flex gap-2 mt-3 w-20 m-1">
-                        <% if (String(currUser._id) !==String(follower._id)) { %>
-                            <form action="/profile/<%= follower._id %>?_method=PATCH" method="post">
-                                <% // Check if current user is following the profile user let
-                                    isFollowing=follower.followers.some(follower=> String(follower) ===
-                                    String(currUser._id));
-
-                                    // Check if profile user is following the current user back
-                                    let isFollower = currUser.followers.some(follower => String(follower) ===
-                                    String(follower._id)); %><button
-                                        class="btn btn-outline-light btn-sm rounded-pill following" id="following">
-                                        <%= isFollowing ? (isFollower ? "Following" : "Following" ) : (isFollower
-                                            ? "Follow Back" : "Follow" ) %>
-                                    </button>
-                            </form>
-                            <% } %>
+                    <a href="/profile/<%= follower.username%>" class="text-decoration-none" style="color: #363333;">
+                        <p class="p-0 m-0 text-white"><b>
+                                <%= follower.name %>
+                            </b></p>
+                        <p class="p-0 m-0">@<%= follower.username %>
+                        </p>
+                    </a>
+                    <p class="p-0 m-0 fs-6">
+                        <%= follower.bio %>
+                    </p>
                 </div>
             </div>
             <% } %>

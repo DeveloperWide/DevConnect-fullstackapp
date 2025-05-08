@@ -1,7 +1,7 @@
 <% layout("./boilerplate/boilerplate") -%>
 
     <div class="container text-white pt-3 pb-3">
-        <form action="/profile/<%= user._id %>?_method=PUT" method="post" class="needs-validation ms-5 me-5" enctype="multipart/form-data" novalidate>
+        <form action="/profile/<%= user.username %>?_method=PUT" method="post" class="needs-validation ms-5 me-5" enctype="multipart/form-data" novalidate>
 
             <!-- Name -->
             <div class="mb-3">

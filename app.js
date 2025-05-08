@@ -11,6 +11,8 @@ const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 const session = require('express-session');
 const flash = require("connect-flash");
+const db = process.env.MONGO_ATLAS;
+const MongoStore = require('connect-mongo');
 
 const postRoutes = require("./routes/post")
 const commentRoutes = require("./routes/comment");
@@ -18,7 +20,16 @@ const ExpressError = require("./utility/ExpressError");
 const userRoutes = require("./routes/user")
 const profileRoutes = require("./routes/profile")
 
+const store = MongoStore.create({
+    mongoUrl: db,
+    touchAfter: 24 * 3600, // time period in seconds
+    crypto: {
+      secret: mongoStoreSecret,
+    }
+  })
+
 const sessionOption = {
+    store: store,
     secret: "secretKey",
     resave: false,
     saveUninitialized: true,
@@ -55,7 +66,7 @@ main().then(() => {
 }).catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/devConnect');
+    await mongoose.connect(db);
 }
 
 
@@ -64,11 +75,10 @@ app.get("/", (req, res) => {
 })
 
 //All Routes
-
+app.use("/", userRoutes)
 app.use("/posts", postRoutes);
 app.use("/posts/:id/comment", commentRoutes);
-app.use("/", userRoutes)
-app.use("/", profileRoutes)
+app.use("/profile/:username/", profileRoutes)
 
 // Catch-all for unmatched routes
 app.use((req, res, next) => {

@@ -1,10 +1,12 @@
 const Post = require("../models/posts");
+const User = require("../models/users");
 const { asyncWrapper } = require("../utility/asyncWrapper")
 const ExpressError = require("../utility/ExpressError");
 
 module.exports.index = async (req, res) => {
     let posts = await Post.find().populate("owner");;
-    res.render("posts/index", { title: "All Posts", posts })
+    let users = await User.find();
+    res.render("posts/index", { title: "All Posts", posts, users })
 }
 
 module.exports.renderNewPostForm = async (req, res) => {

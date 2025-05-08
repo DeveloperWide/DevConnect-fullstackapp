@@ -72,52 +72,55 @@ if (menus) {
     });
 }
 
-let followingBtn = document.querySelector(".following");
-if (followingBtn) {
+let followingBtns = document.querySelectorAll(".following");
 
-    if (followingBtn.innerText.trim() === ("Following")) {
-        followingBtn.style.backgroundColor = "transparent";
-        followingBtn.style.fontWeight = "800";
+followingBtns.forEach((btn) => {
+    let originalText = btn.innerText.trim();
 
-        followingBtn.addEventListener("mouseover", () => {
-            followingBtn.style.border = "1px solid red";
-            followingBtn.style.color = "red";
-            followingBtn.innerText = "Unfollow";
+    if (["Following", "Following (Follows You)"].includes(originalText)) {
+        btn.style.backgroundColor = "transparent";
+        btn.style.fontWeight = "800";
+
+        btn.addEventListener("mouseover", () => {
+            btn.style.border = "1px solid red";
+            btn.style.color = "red";
+            btn.innerText = "Unfollow";
         });
 
-        followingBtn.addEventListener("mouseout", () => {
-            followingBtn.style.border = "1px solid white";
-            followingBtn.style.color = "white"; // or your default color
-            followingBtn.innerText = "Following"
+        btn.addEventListener("mouseout", () => {
+            btn.style.border = "1px solid white";
+            btn.style.color = "white";
+            btn.innerText = originalText;
         });
     }
+});
 
-}
+
 
 let likeBtn = document.querySelectorAll('.like-btn');
 
-if(likeBtn){
+if (likeBtn) {
     console.log(likeBtn)
     likeBtn.forEach(button => {
-        button.addEventListener('click', async function(e) {
+        button.addEventListener('click', async function (e) {
             e.preventDefault();
-    
+
             let id = this.dataset.postId;
-    
+
             try {
-                let res = await fetch(`http://localhost:8080/posts/${id}/like`, {
+                let res = await fetch(`http://localhost:8080/posts/${id}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     }
                 });
-    
+
                 let data = await res.json();
-    
+
                 // Update like count
                 let countSpan = this.parentElement.querySelector('.like-count');
                 countSpan.textContent = data.likesCount;
-    
+
                 // Update icon (toggle heart)
                 let icon = this.querySelector('i');
                 if (data.liked) {
@@ -129,11 +132,48 @@ if(likeBtn){
                     icon.classList.add('fa-regular');
                     icon.style.color = 'rgb(94, 87, 87)';
                 }
-    
+
             } catch (err) {
                 console.error(err);
                 alert("Something went wrong");
             }
         });
+    });
+}
+
+const followBtn = document.getElementById('followBtn');
+const followerCountElem = document.querySelector('a[href$="/follower"] b');
+
+if (followBtn) {
+    followBtn.addEventListener('click', async () => {
+        const username = followBtn.dataset.username;
+
+        try {
+            const res = await fetch(`/profile/${username}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            const data = await res.json();
+
+            if (data.isFollowing) {
+                followBtn.textContent = "Following";
+                // Decrease followers count
+                let count = parseInt(followerCountElem.textContent);
+                followerCountElem.textContent = count - 1;
+                location.reload()
+            } else {
+                followBtn.textContent = "Follow";
+                // Increase followers count
+                let count = parseInt(followerCountElem.textContent);
+                followerCountElem.textContent = count + 1;
+                location.reload()
+            }
+        } catch (error) {
+            location.reload()
+            console.error('Error:', error);
+        }
     });
 }

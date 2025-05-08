@@ -53,9 +53,3 @@ module.exports.validateComment = (req, res, next) => {
         next();
     }
 }
-
-
-module.exports.userCurrentPath = (req, res, next) => {
-    console.log(req)
-    next();
-}

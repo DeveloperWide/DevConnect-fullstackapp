@@ -66,7 +66,7 @@
 
             <pre><code class="card border-dark p-3" style="background-color: #000; border-radius: 1rem; color: #0f0;"><%= post.code %></code></pre>
 
-            <form action="/posts/<%= post._id %>/like" method="POST">
+            <form action="/posts/<%= post._id %>" method="POST">
                 <button type="submit" class="like-btn" 
                 data-post-id="<%= post._id %>"  style="border: none; background: none; padding: 0;">
                     <% if (post.likes.includes(currUser._id)) { %>
@@ -132,7 +132,7 @@
                                         <%= comment.comment %>
                                     </p>
                                 </div>
-                                <% if (String(currUser._id)===String(post.owner._id)) { %>
+                                <% if (String(currUser._id)===String(comment.author._id)) { %>
                                     <div class="menu ms-auto position-relative">
                                         <!-- 3 Dot Icon -->
                                         <i class="fa-solid fa-ellipsis text-secondary fs-4 post-option-icon moreBtn"
