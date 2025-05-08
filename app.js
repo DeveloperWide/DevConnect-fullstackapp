@@ -13,7 +13,7 @@ const session = require('express-session');
 const flash = require("connect-flash");
 const db = process.env.MONGO_ATLAS;
 const MongoStore = require('connect-mongo');
-
+const mongoStoreSecret = "fdflkasdfosfdlkfsldfkjsldkfsdfflsdjfslk"
 const postRoutes = require("./routes/post")
 const commentRoutes = require("./routes/comment");
 const ExpressError = require("./utility/ExpressError");
